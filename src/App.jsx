@@ -10,10 +10,19 @@ function App() {
   const [password, setPassword] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+  // Data dummy untuk proses login
+  const validUser = {
+    username: 'admin',
+    password: '123'
+  };
+
   const handleLogin = (e) => {
     e.preventDefault();
-    if (username === 'admin' && password === '123') {
+
+    // Memverifikasi username dan password dengan data dummy
+    if (username === validUser.username && password === validUser.password) {
       setIsLoggedIn(true);
+      alert('Login Berhasil!');
     } else {
       alert('Username atau password salah!');
     }
@@ -30,12 +39,14 @@ function App() {
       <Container>
         <Card className="p-4 shadow">
           {isLoggedIn ? (
+            // Tampilan setelah login berhasil
             <div>
               <Card.Title as="h2">Halo, {username}!</Card.Title>
               <Card.Text>Selamat datang di Smart Sistem Management.</Card.Text>
               <Button variant="primary" onClick={handleLogout}>Logout</Button>
             </div>
           ) : (
+            // Tampilan form login
             <div>
               <Card.Title as="h2">Login ke SSM</Card.Title>
               <Form onSubmit={handleLogin}>
