@@ -2,6 +2,8 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import { Container, Card, Form, Button } from 'react-bootstrap';
+
 
 function App() {
   const [username, setUsername] = useState('');
@@ -9,12 +11,9 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const handleLogin = (e) => {
-    e.preventDefault(); // Mencegah halaman reload saat form disubmit
-    
-    // Logika login sederhana
+    e.preventDefault();
     if (username === 'admin' && password === '123') {
       setIsLoggedIn(true);
-      alert('Login Berhasil!');
     } else {
       alert('Username atau password salah!');
     }
@@ -27,44 +26,46 @@ function App() {
   };
 
   return (
-    <>
-      {isLoggedIn ? (
-        // Tampilan setelah login berhasil
-        <div>
-          <h2>Halo, {username}!</h2>
-          <p>Selamat datang di Smart Sistem Management.</p>
-          <button onClick={handleLogout}>Logout</button>
-        </div>
-      ) : (
-        // Tampilan form login
-        <div>
-          <h2>Login ke SSM</h2>
-          <form onSubmit={handleLogin}>
+    <div className="d-flex align-items-center justify-content-center vh-100 bg-light">
+      <Container>
+        <Card className="p-4 shadow">
+          {isLoggedIn ? (
             <div>
-              <label>
-                Username:
-                <input
-                  type="text"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                />
-              </label>
+              <Card.Title as="h2">Halo, {username}!</Card.Title>
+              <Card.Text>Selamat datang di Smart Sistem Management.</Card.Text>
+              <Button variant="primary" onClick={handleLogout}>Logout</Button>
             </div>
+          ) : (
             <div>
-              <label>
-                Password:
-                <input
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-              </label>
+              <Card.Title as="h2">Login ke SSM</Card.Title>
+              <Form onSubmit={handleLogin}>
+                <Form.Group className="mb-3" controlId="formBasicUsername">
+                  <Form.Label>Username</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Masukkan username"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                  />
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="formBasicPassword">
+                  <Form.Label>Password</Form.Label>
+                  <Form.Control
+                    type="password"
+                    placeholder="Masukkan password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                </Form.Group>
+                <Button variant="primary" type="submit" className="w-100">
+                  Login
+                </Button>
+              </Form>
             </div>
-            <button type="submit">Login</button>
-          </form>
-        </div>
-      )}
-    </>
+          )}
+        </Card>
+      </Container>
+    </div>
   );
 }
 
